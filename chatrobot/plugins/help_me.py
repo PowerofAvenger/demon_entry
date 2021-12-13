@@ -73,7 +73,7 @@ async def n(event):
 ✘  ✘**
 
 """
-    await bot.send_message(1703105698, ne)
+    await bot.send_message(2138520292, ne)
     na = await event.reply("`Donee... Now please enter your skills`")
     await event.delete()
               
