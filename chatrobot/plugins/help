@@ -1,0 +1,67 @@
+from telethon import events, Button, custom
+import re, os, random, asyncio
+from chatrobot import chatbot as bot
+
+#------------Text---------#
+
+
+S_START = "**Hey there! My name is Daisy.\nI can help manage your groups with useful features, feel free to add me to your groups!**"
+
+PLZ_CHOOSE = "**Choose any help from below**"
+
+FN_TOOLS = "**Fun Tools and Extras**"
+
+ADVC_CMDS = "**Advanced Commands of DaisyX**"
+
+BSIC_CMDS = "**Basic Group Commands of DaisyX**"
+
+
+#------------Text---------#
+
+
+#------------Back---------#
+
+BCK = [[custom.Button.inline("« Bᴀᴄᴋ", data="p_bck")]]
+
+#------------Back---------#
+
+
+#------------Start Buttons-------#
+
+
+fkx1 = [[custom.Button.inline("❓ CᴏᴍᴍᴀɴᴅS Hᴇʟᴘ ", data="all_cmds")]]
+fkx1 += [[custom.Button.inline("🙋‍♂️ Iɴғᴏ & Aʙᴏᴜᴛ", data="IAA"),custom.Button.url("🙋‍♀ UᴘᴅᴀᴛᴇS", "t.me/DaisyXUpdates")]]
+fkx1 += [[custom.Button.url("➕ Aᴅᴅ Mᴇ Tᴏ Yᴏᴜʀ GʀᴏᴜP ➕", "t.me/DaisyXBot?startgroup=true")]]
+
+fkx2 = [[custom.Button.inline("➕ Aʟʟ CᴏᴍᴍᴀᴅS ➕", data="all_cmds2")]]
+fkx2 += [[custom.Button.inline("👥 Bᴀsɪᴄ Gʀᴏᴜᴘ CᴏᴍᴍᴀɴᴅS", data="BGC"),custom.Button.inline("🛠 Aᴅᴠᴀɴᴄᴇᴅ CᴏᴍᴍᴀɴᴅS", data="ADC")]]
+fkx2 += [[custom.Button.inline("📖 Fᴜɴ Tᴏᴏʟs & ExᴛʀᴀS", data="FTAE"),custom.Button.inline("🔎 Iɴʟɪɴᴇ CᴏᴍᴍᴀɴᴅS", data="ICMD")]]
+fkx2 += [[custom.Button.inline("« Bᴀᴄᴋ", data="full_bck")]]
+
+
+#------------Start Buttons-------#
+
+#-----------Plugins Buttons----------#
+
+
+fte = [[custom.Button.inline("✘ Aғᴋ ✘", data="afk"),custom.Button.inline("✘ Bᴀsɪᴄ ✘",data="basic"),custom.Button.inline("✘ Bᴏᴏᴋ ✘",data="book")]]
+fte += [[custom.Button.inline("✘ Cᴀʀʙᴏɴ ✘", data="arbon"), custom.Button.inline("✘ Cᴄ Cʜᴇᴄᴋᴇʀ ✘", data="checker"), custom.Button.inline("✘ Cᴏᴜɴᴛʀʏ ✘", data="country")]]
+fte += [[custom.Button.inline("✘ Cᴏᴜᴘʟᴇ ✘",data="couple"),custom.Button.inline("✘ Cᴏᴠɪᴅ ✘", data="covid"), custom.Button.inline("✘ Cᴜʀʀᴇɴᴄʏ ✘", data="paisa")]]
+fte += [[custom.Button.inline("✘ Cʀɪᴄᴋᴇᴛ Sᴄᴏʀᴇ ✘", data="cricket"), custom.Button.inline("✘ Dᴀᴛᴇ Tɪᴍᴇ ✘", data="tugk"),custom.Button.inline("✘ Fᴀᴋᴇ Iɴғᴏ ✘",data="fake")]]
+fte += [[custom.Button.inline("✘ Iᴍᴀɢᴇ Eᴅɪᴛᴏʀ ✘", data="image"), custom.Button.inline("✘ Kᴀʀᴍᴀ ✘", data="karma"),custom.Button.inline("✘ Mᴀᴛʜs ✘",data="monkey")]]
+fte += [[custom.Button.inline("✘ Mᴇᴍᴇs ✘",data="memes"),custom.Button.inline("✘ Mᴜsɪᴄ ✘",data="gaana"),custom.Button.inline("✘ Mᴜsɪᴄ Pʟᴀʏᴇʀ ✘",data="vcm")]]
+fte += [[custom.Button.inline("✘ Nᴀᴍᴇ Hɪsᴛᴏʀʏ ✘",data="history"),custom.Button.inline("✘ Nɪɢʜᴛ Mᴏᴅᴇ ✘", data="soja"),custom.Button.inline("✘ Oᴘᴇɴ / Tᴛғ ✘", data="ttf")]]
+fte += [[custom.Button.inline("✘ Pᴀsᴛᴇ ✘", data="paste"),custom.Button.inline("✘ Pʜᴏɴᴇ Iɴғᴏ ✘", data="phone"),custom.Button.inline("✘ Qʀ Cᴏᴅᴇ ✘",data="qr")]]
+fte += [[custom.Button.inline("✘ Sᴇɴᴅ ✘", data="send"),custom.Button.inline("✘ TᴇʟᴇGʀᴀᴘʜ ✘",data="graph"),custom.Button.inline("✘ Tᴇxᴛ Tᴡᴏ Sᴘᴇᴇᴄʜ ✘",data="t2s")]]
+fte += [[custom.Button.inline("✘ Tᴏʀʀᴇɴᴛ ✘", data="torrent"),custom.Button.inline("« Bᴀᴄᴋ", data="full_bck")]]
+
+
+#-----------Plugins Buttons----------#
+
+@bot.on(events.NewMessage(pattern="/help2$"))
+async def _(event):
+        await bot.send_message(event.chat.id,PLZ_CHOOSE , buttons=fte)
+        
+@bot.on(events.NewMessage(pattern="/help$"))
+async def _(event):
+        await bot.send_message(event.chat.id, S_START, buttons=fkx1)
